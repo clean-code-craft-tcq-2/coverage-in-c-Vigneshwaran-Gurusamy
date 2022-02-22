@@ -4,9 +4,10 @@
 #include "typewise-alert.h"
 
 TEST_CASE("infers the breach according to limits") {
-  REQUIRE(inferBreach(12, 20, 30) == TOO_LOW);
-  REQUIRE(inferBreach(20, 10, 15) == TOO_HIGH);
-  REQUIRE(inferBreach(15, 10, 20) == NORMAL);
+  REQUIRE(inferBreachLowerLimit(12, 20) == TOO_LOW);
+  REQUIRE(inferBreachUpperLimit(20, 15) == TOO_HIGH);
+  REQUIRE(inferBreachLowerLimit(15, 10) == NORMAL);
+  REQUIRE(inferBreachUpperLimit(15, 20) == NORMAL);
 }
 
 TEST_CASE("Classify the cooling type and infer the breach") {
