@@ -11,12 +11,12 @@ void (*AlertTargetfp[NUMBER_OF_ALERT_TARGETS])(BreachType) = {sendToController, 
 
 BreachType inferBreach(double value, double lowerLimit, double upperlimit) 
 {
-  double BreachValue;
+  BreachType BreachValue;
   if(value < lowerLimit)
   {
     BreachValue = TOO_LOW;
   }
-  else if(value > upperLimit)
+  else if(value > upperlimit)
   {
     BreachValue = TOO_HIGH;
   }
