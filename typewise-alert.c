@@ -9,13 +9,21 @@ char alertMsgForEmail[NUMBER_OF_BREACH_TYPES][100] = {"Hi, the temperature is No
                                                    "Hi, the temperature is too High\n"};
 void (*AlertTargetfp[NUMBER_OF_ALERT_TARGETS])(BreachType) = {sendToController, sendToEmail};
 
-BreachType inferBreach(double value, double lowerLimit, double upperLimit) 
+BreachType inferBreachUpperLimit(double value, double lowerLimit) 
 {
   if(value < lowerLimit)
   {
     return TOO_LOW;
   }
-  else if(value > upperLimit)
+  else
+  {
+    return NORMAL;
+  }
+}
+
+BreachType inferBreachLowerLimit(double value, double upperLimit) 
+{
+  if(value > upperLimit)
   {
     return TOO_HIGH;
   }
