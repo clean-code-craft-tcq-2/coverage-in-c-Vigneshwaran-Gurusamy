@@ -9,36 +9,29 @@ char alertMsgForEmail[NUMBER_OF_BREACH_TYPES][100] = {"Hi, the temperature is No
                                                    "Hi, the temperature is too High\n"};
 void (*AlertTargetfp[NUMBER_OF_ALERT_TARGETS])(BreachType) = {sendToController, sendToEmail};
 
-BreachType inferBreachUpperLimit(double value, double lowerLimit) 
+BreachType inferBreach(double value, double lowerLimit, double upperlimit) 
 {
+  double BreachValue;
   if(value < lowerLimit)
   {
-    return TOO_LOW;
+    BreachValue = TOO_LOW;
+  }
+  else if(value > upperLimit)
+  {
+    BreachValue = TOO_HIGH;
   }
   else
   {
-    return NORMAL;
+    BreachValue = NORMAL;
   }
-}
-
-BreachType inferBreachLowerLimit(double value, double upperLimit) 
-{
-  if(value > upperLimit)
-  {
-    return TOO_HIGH;
-  }
-  else
-  {
-    return NORMAL;
-  }
+  return BreachValue;
 }
 
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) 
 {
   int lowerLimit = limits[coolingType][LOWERLIMIT_IDX];
   int upperLimit = limits[coolingType][UPPERLIMIT_IDX];
-  return inferBreachUpperLimit(temperatureInC, upperLimit);
-  return inferBreachLowerLimit(temperatureInC, lowerLimit);
+  return inferBreach(temperatureInC, lowerLimit, upperLimit);
 }
 
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) 
